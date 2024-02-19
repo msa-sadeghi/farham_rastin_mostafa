@@ -16,8 +16,7 @@ class Player(Sprite):
         screen.blit(self.image, self.rect)
     def fire(self)    :
         if len(self.bullet_group) < 2:
-            PlayerBullet(self.rect.centerx, self.rect.top,\
-                self.bullet_group)
+            PlayerBullet(self.rect.centerx, self.rect.top,self.bullet_group)
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and self.rect.left > 0:

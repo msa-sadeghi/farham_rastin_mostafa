@@ -2,6 +2,7 @@ from constants import *
 from player import Player
 from enemy import Chick
 player_bullet_group = pygame.sprite.Group()
+enemy_bullet_group = pygame.sprite.Group()
 my_player = Player(player_bullet_group)
 chick_group = pygame.sprite.Group()
 def spawn_chick():
@@ -20,6 +21,12 @@ def check_edge_collision():
         for chick in chick_group:
             chick.rect.y += 10 * level
             chick.direction *= -1
+            
+def check_bullet_collisions():
+    if pygame.sprite.groupcollide(player_bullet_group, chick_group, True, True):
+        pass
+            
+            
 running = True
 while running:
     for event in pygame.event.get():
@@ -28,12 +35,15 @@ while running:
                 running = False
             if event.key == pygame.K_SPACE:
                 my_player.fire()
-    check_edge_collision()            
+    check_edge_collision()  
+    check_bullet_collisions()          
     screen.fill((0,0,0))
-    chick_group.update()
+    chick_group.update(enemy_bullet_group)
     chick_group.draw(screen)
     player_bullet_group.update()
     player_bullet_group.draw(screen)
+    enemy_bullet_group.update()
+    enemy_bullet_group.draw(screen)
     my_player.draw()           
     my_player.move()
     pygame.display.update()
