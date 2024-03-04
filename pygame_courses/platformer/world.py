@@ -12,6 +12,11 @@ class World:
                     rect = img.get_rect(topleft = (j * 32, i * 32))
                     item = (img, rect)
                     self.tile_map.append(item)
+                if world_data[i][j] == 2:
+                    img = pygame.image.load("assets/grass.png")
+                    rect = img.get_rect(topleft = (j * 32, i * 32))
+                    item = (img, rect)
+                    self.tile_map.append(item)
         
     def draw(self, screen):
         screen.blit(self.bg_img, self.bg_rect)
