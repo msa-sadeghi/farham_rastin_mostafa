@@ -19,9 +19,9 @@ class Player(Sprite):
         self.yvelocity=0
         self.xvelocity=5
         self.direction =   1 
+        self.jumped = False
     def draw(self,screen):
-        screen.blit(self.image, self.rect)
-        
+        screen.blit(self.image, self.rect)       
     def move(self, tile_map):
         dx = 0
         dy = 0
@@ -32,15 +32,23 @@ class Player(Sprite):
         if keys[pygame.K_RIGHT]:
             self.direction = 1
             dx += self.xvelocity
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and not self.jumped:
             self.yvelocity = -13
+            self.jumped = True
         dy += self.yvelocity
         self.yvelocity += 1
         
         for tile in tile_map:
+            if tile[1].colliderect(self.rect.x + dx, self.rect.y , self.image.get_width(), self.image.get_height()):
+                dx = 0
             if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.image.get_width(), self.image.get_height()):
-                self.yvelocity = 0
-                dy = tile[1].top - self.rect.bottom
+                if self.yvelocity > 0:
+                    self.yvelocity = 0
+                    dy = tile[1].top - self.rect.bottom
+                    self.jumped = False
+                else:
+                    self.yvelocity = 0
+                    dy = tile[1].bottom - self.rect.top
             
         self.rect.x += dx
         self.rect.y += dy
