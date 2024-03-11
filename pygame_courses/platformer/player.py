@@ -22,3 +22,29 @@ class Player(Sprite):
     def draw(self,screen):
         screen.blit(self.image, self.rect)
         
+    def move(self, tile_map):
+        dx = 0
+        dy = 0
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.direction = -1
+            dx -= self.xvelocity
+        if keys[pygame.K_RIGHT]:
+            self.direction = 1
+            dx += self.xvelocity
+        if keys[pygame.K_SPACE]:
+            self.yvelocity = -13
+        dy += self.yvelocity
+        self.yvelocity += 1
+        
+        for tile in tile_map:
+            if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.image.get_width(), self.image.get_height()):
+                self.yvelocity = 0
+                dy = tile[1].top - self.rect.bottom
+            
+        self.rect.x += dx
+        self.rect.y += dy
+        
+            
+            
+        

@@ -20,5 +20,6 @@ while running:
             running = False
     game_world.draw(screen)
     my_player.draw(screen)
+    my_player.move(game_world.tile_map)
     pygame.display.update()
     clock.tick(60)
