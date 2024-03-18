@@ -20,20 +20,40 @@ class Player(Sprite):
         self.xvelocity=5
         self.direction =   1 
         self.jumped = False
+        self.moving_state = False
+        self.update_time = pygame.time.get_ticks()
+        self.jump_sound = pygame.mixer.Sound("assets/img/jump.wav")
     def draw(self,screen):
-        screen.blit(self.image, self.rect)       
+        screen.blit(self.image, self.rect) 
+        self.animation()
+    def animation(self):
+        if pygame.time.get_ticks() - self.update_time > 200:
+            self.frame_index += 1
+            self.update_time = pygame.time.get_ticks()
+        if self.frame_index >= len(self.right_images) or not self.moving_state:
+            self.frame_index = 0
+        if self.direction == 1:
+            self.image = self.right_images[self.frame_index]
+        elif self.direction == -1:
+            self.image = self.left_images[self.frame_index]        
     def move(self, tile_map):
         dx = 0
         dy = 0
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
+            self.moving_state = True
             self.direction = -1
             dx -= self.xvelocity
         if keys[pygame.K_RIGHT]:
+            self.moving_state = True
             self.direction = 1
-            dx += self.xvelocity
+            dx += self.xvelocity      
+        if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
+            self.moving_state = False
+        
         if keys[pygame.K_SPACE] and not self.jumped:
-            self.yvelocity = -13
+            self.jump_sound.play()
+            self.yvelocity = -15
             self.jumped = True
         dy += self.yvelocity
         self.yvelocity += 1

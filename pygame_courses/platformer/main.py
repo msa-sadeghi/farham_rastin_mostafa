@@ -5,9 +5,11 @@ from player import Player
 pygame.init()
 
 my_player = Player()
-game_world = World(world_data)
-
-screen_width = 1024
+enemy_group = pygame.sprite.Group()
+game_world = World(world_data, enemy_group)
+pygame.mixer.music.load("assets/img/music.wav")
+pygame.mixer.music.play(-1)
+screen_width = 1024  
 screen_height = 704
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Platformer")
@@ -19,6 +21,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     game_world.draw(screen)
+    enemy_group.update()
+    enemy_group.draw(screen)
     my_player.draw(screen)
     my_player.move(game_world.tile_map)
     pygame.display.update()
