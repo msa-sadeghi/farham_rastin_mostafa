@@ -24,6 +24,6 @@ while running:
     enemy_group.update()
     enemy_group.draw(screen)
     my_player.draw(screen)
-    my_player.move(game_world.tile_map)
+    my_player.move(game_world.tile_map, enemy_group)
     pygame.display.update()
     clock.tick(60)

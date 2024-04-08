@@ -23,7 +23,11 @@ class Player(Sprite):
         self.moving_state = False
         self.update_time = pygame.time.get_ticks()
         self.jump_sound = pygame.mixer.Sound("assets/img/jump.wav")
+        self.dead_image = pygame.image.load("assets/img/ghost.png")
+        
     def draw(self,screen):
+        if not self.alive:
+            self.image = self.dead_image
         screen.blit(self.image, self.rect) 
         self.animation()
     def animation(self):
@@ -36,7 +40,7 @@ class Player(Sprite):
             self.image = self.right_images[self.frame_index]
         elif self.direction == -1:
             self.image = self.left_images[self.frame_index]        
-    def move(self, tile_map):
+    def move(self, tile_map, enemy_group):
         dx = 0
         dy = 0
         keys = pygame.key.get_pressed()
@@ -69,7 +73,8 @@ class Player(Sprite):
                 else:
                     self.yvelocity = 0
                     dy = tile[1].bottom - self.rect.top
-            
+        if pygame.sprite.spritecollide(self, enemy_group, False)    :
+            self.alive=False
         self.rect.x += dx
         self.rect.y += dy
         
