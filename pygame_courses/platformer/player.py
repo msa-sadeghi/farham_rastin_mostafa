@@ -23,6 +23,7 @@ class Player(Sprite):
         self.moving_state = False
         self.update_time = pygame.time.get_ticks()
         self.jump_sound = pygame.mixer.Sound("assets/img/jump.wav")
+        self.coin_sound = pygame.mixer.Sound("assets/img/coin.wav")
         self.dead_image = pygame.image.load("assets/img/ghost.png")
         
     def draw(self,screen):
@@ -40,7 +41,7 @@ class Player(Sprite):
             self.image = self.right_images[self.frame_index]
         elif self.direction == -1:
             self.image = self.left_images[self.frame_index]        
-    def move(self, tile_map, enemy_group):
+    def move(self, tile_map, enemy_group, coin_group):
         dx = 0
         dy = 0
         if self.alive:
@@ -76,6 +77,9 @@ class Player(Sprite):
                         dy = tile[1].bottom - self.rect.top
             if pygame.sprite.spritecollide(self, enemy_group, False)    :
                 self.alive=False
+            if pygame.sprite.spritecollide(self, coin_group, True)    :
+                self.score += 1
+                self.coin_sound.play()
             self.rect.x += dx
             self.rect.y += dy
         

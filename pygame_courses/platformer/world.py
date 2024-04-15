@@ -1,7 +1,9 @@
 import pygame
 from enemy import Enemy
+from coin import Coin
+from door import Door
 class World:
-    def __init__(self, world_data, enemy_group):
+    def __init__(self, world_data, enemy_group, coin_group, door_group):
         self.tile_map = []
         bg_img = pygame.image.load("assets/background.png")
         self.bg_img = pygame.transform.scale(bg_img, (1024, 704))
@@ -20,6 +22,10 @@ class World:
                     self.tile_map.append(item)
                 if world_data[i][j] == 3:
                     Enemy(j * 32, i * 32, enemy_group)
+                if world_data[i][j] == 4:
+                    Coin(j * 32, i * 32, coin_group)
+                if world_data[i][j] == 5:
+                    Door(j * 32, i * 32, door_group)
     def draw(self, screen):
         screen.blit(self.bg_img, self.bg_rect)
         for tile in self.tile_map:
