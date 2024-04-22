@@ -1,11 +1,16 @@
 import pygame
 from world import World
-from level1 import world_data
+
 from player import Player
 from button import Button
 
-
+import pickle
 pygame.init()
+
+f = open("level1", "rb")
+world_data = pickle.load(f)
+
+level = 1
 
 my_player = Player()
 enemy_group = pygame.sprite.Group()
@@ -44,7 +49,7 @@ while running:
         if restart_button.check_click():
             coin_group.empty()
             enemy_group.empty()
-            game_world = World(world_data, enemy_group, coin_group)
+            game_world = World(world_data, enemy_group, coin_group,door_group)
             my_player.__init__()
     pygame.display.update()
     clock.tick(60)
