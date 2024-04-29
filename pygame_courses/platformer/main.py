@@ -11,7 +11,7 @@ f = open("level1", "rb")
 world_data = pickle.load(f)
 
 level = 1
-
+MAX_LEVEL = 3
 my_player = Player()
 enemy_group = pygame.sprite.Group()
 coin_group = pygame.sprite.Group()
@@ -28,6 +28,21 @@ clock = pygame.time.Clock()
 restart_image = pygame.image.load("assets/img/restart_btn.png")
 restart_button = Button(restart_image, screen_width/2, screen_height/2)
 
+def check_level_completed():
+    global level
+    if pygame.sprite.spritecollide(my_player, door_group, False):
+        if level < 3:
+            level += 1
+        f = open(f"level{level}", "rb")
+        world_data = pickle.load(f)
+        my_player.__init__()
+        coin_group.empty()
+        enemy_group.empty()
+        door_group.empty()
+        game_world = World(world_data, enemy_group, coin_group, door_group)
+        return game_world
+        
+
 
 running = True
 
@@ -35,6 +50,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    check_level_completed()
     game_world.draw(screen)
     enemy_group.update()
     enemy_group.draw(screen)
@@ -49,6 +65,7 @@ while running:
         if restart_button.check_click():
             coin_group.empty()
             enemy_group.empty()
+            door_group.empty()
             game_world = World(world_data, enemy_group, coin_group,door_group)
             my_player.__init__()
     pygame.display.update()
