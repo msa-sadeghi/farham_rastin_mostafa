@@ -1,5 +1,7 @@
 from pygame.sprite import Sprite
 import pygame
+from bullet import Bullet
+import math
 class Castle(Sprite):
     def __init__(self, x,y):
         super().__init__()
@@ -18,4 +20,12 @@ class Castle(Sprite):
         
     def draw(self,screen):
         screen.blit(self.image, self.rect)
-    #
+    
+    
+    def shoot(self, group):
+        if pygame.mouse.get_pressed()[0]:
+            pos = pygame.mouse.get_pos()
+            y_dist = -(pos[1] - self.rect.midleft[1])
+            x_dist = pos[0] - self.rect.midleft[0]
+            Bullet(self.rect.midleft[0], self.rect.midleft[1], math.atan2(y_dist, x_dist), group)
+        
