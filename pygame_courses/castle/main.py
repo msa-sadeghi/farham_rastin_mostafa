@@ -22,8 +22,3 @@ while running:
     clock.tick(FPS)
     
     
-# تکلیف
-# کلاس های زیر ر ایجاد نمائید
-# Tower
-# Bullet
-# از کتاب تمرین ، 4و 5و 6 را حل کنید
