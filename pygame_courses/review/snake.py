@@ -17,6 +17,17 @@ class Food:
     def __init__(self) -> None:
         x = randint(0, window_width//SNAKE_BODY_SIZE - 1) * 50
         y = randint(0, window_height//SNAKE_BODY_SIZE - 1) * 50
+        r = True
+        while r:
+            for body in snake.coordinates:
+                if body[0] == x and y == body[1]:
+                    x = randint(0, window_width//SNAKE_BODY_SIZE - 1) * 50
+                    y = randint(0, window_height//SNAKE_BODY_SIZE - 1) * 50
+                    break
+            else:
+                r= False
+                
+                
         self.coordinate = [x,y]
         canvas.create_oval(x,y, x + SNAKE_BODY_SIZE,\
             y + SNAKE_BODY_SIZE, fill="green", tag="food")
@@ -80,6 +91,10 @@ def if_game_over():
     x,y = snake.coordinates[0]
     if x < 0 or x > WIDTH or y <0 or y > HEIGHT:
         return True
+    for body in snake.coordinates[1:]:
+        if body[0] == x and body[1] == y:
+            return True
+        
     
     return False
         
@@ -112,4 +127,5 @@ window.mainloop()
 
 # TODO
 # if snake head collides with snake bodies then we should game over
-# check if new food position collides with any parts of snake bodies then ou must generate another 
+# check if new food position collides with any parts of snake bodies then you must generate another 
+
