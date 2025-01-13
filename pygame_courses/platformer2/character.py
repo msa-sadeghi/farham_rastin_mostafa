@@ -1,5 +1,6 @@
 from pygame.sprite import Sprite
 import os
+from bullet import Bullet
 from config import *
 import pygame.camera
 class Character(Sprite):
@@ -73,4 +74,17 @@ class Character(Sprite):
             self.action = new_animation
             self.image_number = 0
             self.last_image_change_time = pygame.time.get_ticks()
+            
+            
+    def shoot(self, weapon, weapon_group):
+        # TODO decrease ammo amount and place 100 miliseconds delay between every bullet shoot
+        # and check if charcter has ammo then he can shoot again
+        if weapon == "bullet":
+            Bullet(
+                self.type, 
+                self.rect.centerx + self.direction * self.rect.size[0] * 0.6,
+                self.rect.centery,
+                self.direction,
+                weapon_group
+                   )
                 
