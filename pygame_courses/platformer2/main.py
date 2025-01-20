@@ -6,6 +6,7 @@ pygame.init()
 player = Character("player", 100, 300, 60, 10)
 moving_left, moving_right, jumped = (False, False, False)
 bullet_shoot = False
+grenade_shoot = False
 running = True
 while running == True:
     for event in pygame.event.get():
@@ -20,6 +21,8 @@ while running == True:
                 jumped = True
             if event.key == pygame.K_SPACE:
                 bullet_shoot = True
+            if event.key == pygame.K_g:
+                grenade_shoot = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 moving_left = False
@@ -29,6 +32,8 @@ while running == True:
                 jumped = False
             if event.key == pygame.K_SPACE:
                 bullet_shoot = False
+            if event.key == pygame.K_g:
+                grenade_shoot = False
     
     if player.alive:
         if moving_left or moving_right:

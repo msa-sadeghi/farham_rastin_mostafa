@@ -33,6 +33,7 @@ class Character(Sprite):
         self.direction = 1
         self.gravity = 0
         self.in_air = False
+        self.last_shoot_time = 0
                 
     def draw(self, screen):
         img = self.all_images[self.action][self.image_number]
@@ -77,14 +78,16 @@ class Character(Sprite):
             
             
     def shoot(self, weapon, weapon_group):
-        # TODO decrease ammo amount and place 100 miliseconds delay between every bullet shoot
-        # and check if charcter has ammo then he can shoot again
-        if weapon == "bullet":
-            Bullet(
-                self.type, 
-                self.rect.centerx + self.direction * self.rect.size[0] * 0.6,
-                self.rect.centery,
-                self.direction,
-                weapon_group
-                   )
+        
+        if weapon == "bullet" and self.ammo > 0:
+            if pygame.time.get_ticks() - self.last_shoot_time > 100:
+                self.last_shoot_time = pygame.time.get_ticks()
+                self.ammo -= 1
+                Bullet(
+                    self.type, 
+                    self.rect.centerx + self.direction * self.rect.size[0] * 0.6,
+                    self.rect.centery,
+                    self.direction,
+                    weapon_group
+                    )
                 
