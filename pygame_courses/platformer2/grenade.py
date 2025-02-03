@@ -14,6 +14,11 @@ class Grenade(Sprite):
         dx = self.direction * 4
         dy = self.gravity
         self.gravity += 1
+        if self.rect.bottom + dy >= 300:
+            dy = 300 - self.rect.bottom
+            dx = 0
+        
+        
         self.rect.x += dx
         self.rect.y += dy
         

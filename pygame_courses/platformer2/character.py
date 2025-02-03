@@ -3,6 +3,8 @@ import os
 from bullet import Bullet
 from config import *
 import pygame.camera
+
+from grenade import Grenade
 class Character(Sprite):
     def __init__(self, type, x,y, ammo, grenades):
         super().__init__()
@@ -90,4 +92,15 @@ class Character(Sprite):
                     self.direction,
                     weapon_group
                     )
+                
+        if weapon == "grenade":
+            if pygame.time.get_ticks() - self.last_shoot_time > 100:
+                self.last_shoot_time = pygame.time.get_ticks()
+                Grenade(
+                    self.rect.centerx + self.direction * self.rect.size[0] * 0.6,
+                    self.rect.centery,
+                    weapon_group,
+                    self.direction
+                )
+            
                 
