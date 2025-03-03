@@ -66,7 +66,8 @@ for i in range(ROWS):
 def draw_world():
     for i in range(len(world_data)):
         for j in range(len(world_data[i])):
-            
+            screen.blit(tile_images[world_data[i][j]], (j * TILE_SIZE, i * TILE_SIZE))
+
 
 FPS = 60
 screen = pygame.display.set_mode((WIDTH + SIDE_MARGIN, HEIGHT + LOWER_MARGIN))
