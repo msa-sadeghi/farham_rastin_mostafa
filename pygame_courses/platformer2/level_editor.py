@@ -66,7 +66,8 @@ for i in range(ROWS):
 def draw_world():
     for i in range(len(world_data)):
         for j in range(len(world_data[i])):
-            screen.blit(tile_images[world_data[i][j]], (j * TILE_SIZE, i * TILE_SIZE))
+            if world_data[i][j] >=0:
+                screen.blit(tile_images[world_data[i][j]], (j * TILE_SIZE - scroll, i * TILE_SIZE))
 
 
 FPS = 60
@@ -103,7 +104,7 @@ while running:
         world_data[row][col] = selected_tile
 
 
-
+    draw_world()
     if scroll_right:
         scroll += 5
     if scroll_left and scroll > 0:
