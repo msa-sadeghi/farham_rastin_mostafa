@@ -59,8 +59,8 @@ for i in range(21):
         col = 0
 
 world_data = []
-r = [-1] * MAX_COLS
 for i in range(ROWS):
+    r = [-1] * MAX_COLS
     world_data.append(r)
 
 def draw_world():
@@ -94,16 +94,17 @@ while running:
         if buttons_list[i].draw(screen):
             selected_tile = i
             
-
+    print(selected_tile)
 
     pygame.draw.rect(screen, "red", buttons_list[selected_tile].rect, 3)
     if pygame.mouse.get_pressed()[0]:
         mouse_position = pygame.mouse.get_pos()
         col = (mouse_position[0] + scroll) // TILE_SIZE
         row = mouse_position[1] // TILE_SIZE
-        world_data[row][col] = selected_tile
+        if world_data[row][col] != selected_tile:
+                world_data[row][col] = selected_tile
 
-
+    print(world_data[-1])
     draw_world()
     if scroll_right:
         scroll += 5
