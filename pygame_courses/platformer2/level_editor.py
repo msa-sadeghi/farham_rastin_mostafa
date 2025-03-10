@@ -97,14 +97,16 @@ while running:
     print(selected_tile)
 
     pygame.draw.rect(screen, "red", buttons_list[selected_tile].rect, 3)
+    mouse_position = pygame.mouse.get_pos()
+    col = (mouse_position[0] + scroll) // TILE_SIZE
+    row = mouse_position[1] // TILE_SIZE
     if pygame.mouse.get_pressed()[0]:
-        mouse_position = pygame.mouse.get_pos()
-        col = (mouse_position[0] + scroll) // TILE_SIZE
-        row = mouse_position[1] // TILE_SIZE
-        if world_data[row][col] != selected_tile:
+        if world_data[row][col] != selected_tile and mouse_position[0] < WIDTH and mouse_position[1] < HEIGHT:
                 world_data[row][col] = selected_tile
 
-    print(world_data[-1])
+    if pygame.mouse.get_pressed()[2]:
+        world_data[row][col] = -1
+
     draw_world()
     if scroll_right:
         scroll += 5
